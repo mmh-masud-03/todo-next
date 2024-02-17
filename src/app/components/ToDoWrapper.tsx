@@ -32,6 +32,19 @@ function ToDoWrapper() {
     });
     setTodos(toggledTodos);
   };
+  const editTask = (id: number, updatedName: string, updatedDesc: string) => {
+    const updatingTodo = todos.map((todo) => {
+      if (todo.id === id) {
+        return { ...todo, name: updatedName, description: updatedDesc };
+      }
+      return todo;
+    });
+    setTodos(updatingTodo);
+  };
+  const deleteTask = (id: number) => {
+    const updatedTodos = todos.filter((todo) => todo.id !== id);
+    setTodos(updatedTodos);
+  };
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value);
@@ -58,7 +71,7 @@ function ToDoWrapper() {
           <select
             value={filter}
             onChange={handleFilterChange}
-            className="bg-inherit border p-1 rounded text-black"
+            className="bg-transparent border p-1 rounded text-black"
           >
             <option value="all">All</option>
             <option value="completed">Completed</option>
@@ -81,6 +94,8 @@ function ToDoWrapper() {
             key={todo.id}
             todo={todo}
             toggleTaskStatus={toggleTaskStatus}
+            deleteTask={deleteTask}
+            editTask={editTask}
           />
         ))}
       </div>
