@@ -51,7 +51,7 @@ function ToDoCard({ todo, toggleTaskStatus, editTask, deleteTask }: Props) {
               type="text"
               value={editedName}
               onChange={(e) => setEditedName(e.target.value)}
-              className="bg-transparent"
+              className="bg-transparent focus:outline-none"
               placeholder="Task Name"
             />
           ) : (
@@ -72,14 +72,14 @@ function ToDoCard({ todo, toggleTaskStatus, editTask, deleteTask }: Props) {
             type="text"
             value={editedDescription}
             onChange={(e) => setEditedDescription(e.target.value)}
-            className="bg-transparent"
+            className="bg-transparent focus:outline-none"
             placeholder="Task Description"
           />
         ) : (
           todo.description
         )}
       </p>{" "}
-      <div className="flex flex-row ml-40 gap-2 items-center justify-center size-14 cursor-pointer text-gray-200 ">
+      <div className="flex flex-row ml-40 gap-2 items-end justify-end size-14 cursor-pointer text-gray-200 ">
         {isEditing ? (
           <div className="flex flex-row justify-around -ml-24 gap-2">
             <button
