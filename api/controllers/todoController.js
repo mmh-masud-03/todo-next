@@ -18,14 +18,27 @@ export const getSingleTodo = async (req,res)=>{
     }
 }
 
-export const getAllTodos = async (req, res)=>{
-    try{
-        const todos= await Todo.find();
+export const getAllTodos = async (req, res) => {
+    try {
+        const { completed } = req.query;
+        let todos;
+
+        if (completed === 'true') {
+            todos = await Todo.find({ completed: true });
+        } else if (completed === 'false') {
+            todos = await Todo.find({ completed: false });
+        } else {
+            todos = await Todo.find();
+        }
+
         res.status(200).json(todos);
-    }catch(err){
-        res.status(500).json(err);
+    } catch (err) {
+        // Handle the error here
+        console.error("Error fetching todos:", err);
+        res.status(500).json({ error: "Error fetching todos" });
     }
-}
+};
+
 
 export const updateTodo = async (req, res)=>{
     try{

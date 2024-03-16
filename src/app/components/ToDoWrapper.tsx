@@ -16,10 +16,14 @@ function ToDoWrapper() {
   const [filter, setFilter] = useState<string>("all");
   useEffect(() => {
     fetchTodos();
-  }, []);
+  }, [filter]);
   const fetchTodos = async () => {
     try {
-      const response = await fetch("http://localhost:8000/api/todos/all/");
+      let url = "http://localhost:8000/api/todos/all";
+      if (filter !== "all") {
+        url += `?completed=${filter === "completed" ? "true" : "false"}`;
+      }
+      const response = await fetch(url);
       if (response.ok) {
         const data = await response.json();
         setTodos(data);
@@ -125,24 +129,9 @@ function ToDoWrapper() {
     }
   };
 
-  // const deleteTask = (id: string) => {
-  //   const updatedTodos = todos.filter((todo) => todo._id !== id);
-  //   setTodos(updatedTodos);
-  // };
-
   const handleFilterChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setFilter(e.target.value);
   };
-
-  const filteredTodos = todos.filter((todo) => {
-    if (filter === "all") {
-      return true;
-    } else if (filter === "completed") {
-      return todo.completed;
-    } else {
-      return !todo.completed;
-    }
-  });
 
   return (
     <div>
