@@ -134,10 +134,10 @@ function ToDoWrapper() {
   };
 
   return (
-    <div>
-      <span className="text-4xl text-white font-bold block mx-auto py-3">
+    <div className="w-full">
+      <p className="text-4xl text-white font-bold w-full text-center py-3">
         ToDo Application
-      </span>
+      </p>
       <div className="flex flex-row items-center justify-around w-1/2 mt-6 mx-auto">
         <div>
           <span className="text-white px-2 text-xl">Filter By:</span>
