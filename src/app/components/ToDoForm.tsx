@@ -10,19 +10,34 @@ function ToDoForm({ onCancel, addTodo }: Props) {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const newTask: SingleTask = {
-      id: Math.random(),
       name: title,
       description: description,
       completed: false,
     };
-    console.log("Task added:", newTask);
-    addTodo(newTask);
-    setTitle("");
-    setDescription("");
-    onCancel();
+    try {
+      const response = await fetch("http://localhost:8000/api/todos/create/", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(newTask),
+      });
+      if (response.ok) {
+        const data = await response.json(); // Assuming the server returns the created task with its ID
+        console.log("Task added:", data);
+        addTodo(data); // Add the returned task to the list
+        setTitle("");
+        setDescription("");
+        onCancel();
+      } else {
+        console.log("Error adding task");
+      }
+    } catch (error) {
+      console.error("Error adding task:", error);
+    }
   };
 
   const handleTitle = (e: React.ChangeEvent<HTMLInputElement>) => {

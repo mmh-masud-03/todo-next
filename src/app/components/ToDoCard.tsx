@@ -5,9 +5,9 @@ import { PencilIcon, TrashIcon } from "@heroicons/react/16/solid";
 
 interface Props {
   todo: SingleTask;
-  toggleTaskStatus: (id: number) => void;
-  deleteTask: (id: number) => void;
-  editTask: (id: number, updatedName: string, updatedDesc: string) => void;
+  toggleTaskStatus: (_id: string) => void;
+  deleteTask: (_id: string) => void;
+  editTask: (_id: string, updatedName: string, updatedDesc: string) => void;
 }
 function ToDoCard({ todo, toggleTaskStatus, editTask, deleteTask }: Props) {
   const [isEditing, setIsEditing] = useState(false);
@@ -15,17 +15,17 @@ function ToDoCard({ todo, toggleTaskStatus, editTask, deleteTask }: Props) {
   const [editedDescription, setEditedDescription] = useState(todo.description);
 
   const handleCheckboxChange = () => {
-    toggleTaskStatus(todo.id);
+    toggleTaskStatus(todo._id || " ");
   };
   const handleDelete = () => {
-    deleteTask(todo.id);
+    deleteTask(todo._id || " ");
   };
   const handleEdit = () => {
     setIsEditing(true);
   };
 
   const handleSave = () => {
-    editTask(todo.id, editedName, editedDescription);
+    editTask(todo._id || " ", editedName, editedDescription);
     setIsEditing(false);
   };
 
